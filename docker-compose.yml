@@ -36,6 +36,20 @@ services:
       - efd_data:/app/data  # Volumen zur Speicherung der EFD-Meldungen
     networks:
       - project-root_network
+    deploy:
+      replicas: 3  # 3 Container für den EFD-Generator
+
+  # Load Balancer (HAProxy)
+  load_balancer:
+    image: haproxy:lts
+    ports:
+      - "9091:9091"  # Port für den Load Balancer
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg  # Konfigurationsdatei für HAProxy
+    networks:
+      - project-root_network
+    depends_on:
+      - efd_generator
 
 volumes:
   efd_data:
