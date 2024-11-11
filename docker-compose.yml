@@ -1,0 +1,45 @@
+version: '3'
+services:
+  activemq:
+    image: rmohr/activemq:5.15.9
+    mem_limit: 512m
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    ports:
+      - "61616:61616"   # Port für JMS
+      - "8161:8161"     # Port für das ActiveMQ-Webinterface
+    environment:
+      ACTIVEMQ_ADMIN_LOGIN: admin
+      ACTIVEMQ_ADMIN_PASSWORD: admin
+    networks:
+      - project-root_network
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"     # Standard-Port für Redis
+    networks:
+      - project-root_network
+
+  efd_generator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - activemq
+      - redis
+    environment:
+      ACTIVEMQ_URL: tcp://activemq:61616
+    volumes:
+      - efd_data:/app/data  # Volumen zur Speicherung der EFD-Meldungen
+    networks:
+      - project-root_network
+
+volumes:
+  efd_data:
+
+networks:
+  project-root_network:
+    driver: bridge

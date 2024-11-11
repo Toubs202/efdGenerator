@@ -1,0 +1,158 @@
+Content:
+<fl:FlightDataMessage xmlns:fw="eurocontrol/cfmu/b2b/FlowServices"
+    xmlns:as="eurocontrol/cfmu/b2b/AirspaceServices" xmlns:fl="eurocontrol/cfmu/b2b/FlightServices"
+    xmlns:cm="eurocontrol/cfmu/b2b/CommonServices"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <uuid>6a66aaa9-bf80-42bc-ae20-536b1030a2df</uuid>
+    <timestamp>2024-09-05 08:23:16 551</timestamp>
+    <messageExchangePattern>PUBLISH_SUBSCRIBE</messageExchangePattern>
+    <type>BUSINESS_MESSAGE</type>
+    <topic>FLIGHT_DATA</topic>
+    <subscriptionUuid>f2e6a974-5988-475b-9e41-e0cab1a75a7d</subscriptionUuid>
+    <subscriptionVersion>1</subscriptionVersion>
+    <parentMessageId>20240905082311E486913V57</parentMessageId>
+    <flightData>
+        <flightId>
+            <id>AA62935038</id>
+            <keys>
+                <aircraftId>IAM1490</aircraftId>
+                <aerodromeOfDeparture>LIPE</aerodromeOfDeparture>
+                <nonICAOAerodromeOfDeparture>false</nonICAOAerodromeOfDeparture>
+                <airFiled>false</airFiled>
+                <aerodromeOfDestination>ETAR</aerodromeOfDestination>
+                <nonICAOAerodromeOfDestination>false</nonICAOAerodromeOfDestination>
+                <estimatedOffBlockTime>2024-09-05 08:00</estimatedOffBlockTime>
+            </keys>
+        </flightId>
+        <aircraftType>P180</aircraftType>
+        <calculatedOffBlockTime>2024-09-05 08:07</calculatedOffBlockTime>
+        <actualOffBlockTime>2024-09-05 08:07</actualOffBlockTime>
+        <estimatedTakeOffTime>2024-09-05 08:15</estimatedTakeOffTime>
+        <calculatedTakeOffTime>2024-09-05 08:22</calculatedTakeOffTime>
+        <actualTakeOffTime>2024-09-05 08:22</actualTakeOffTime>
+        <currentDepartureTaxiTimeAndProcedure>
+            <taxiTime>0015</taxiTime>
+            <taxiTimeSource>RWY</taxiTimeSource>
+            <terminalProcedure>
+                <id>LUMAV1K</id>
+            </terminalProcedure>
+        </currentDepartureTaxiTimeAndProcedure>
+        <estimatedTimeOfArrival>2024-09-05 09:19</estimatedTimeOfArrival>
+        <calculatedTimeOfArrival>2024-09-05 09:27</calculatedTimeOfArrival>
+        <actualTimeOfArrival>2024-09-05 09:26</actualTimeOfArrival>
+        <lateFiler>false</lateFiler>
+        <aircraftOperator>IAM</aircraftOperator>
+        <reroutable>CANNOT_BE_REROUTED</reroutable>
+        <exemptedFromRegulations>false</exemptedFromRegulations>
+        <delay>0007</delay>
+        <mostPenalisingRegulation>LIPS1205</mostPenalisingRegulation>
+        <hasOtherRegulations>true</hasOtherRegulations>
+        <regulationLocations>
+            <regulationId>LIPS1205</regulationId>
+            <referenceLocation-ReferenceLocationAirspace>
+                <type>AIRSPACE</type>
+                <id>LIPPSU12</id>
+            </referenceLocation-ReferenceLocationAirspace>
+            <toConfirm>false</toConfirm>
+        </regulationLocations>
+        <regulationLocations>
+            <regulationId>LIPC105</regulationId>
+            <referenceLocation-ReferenceLocationAirspace>
+                <type>AIRSPACE</type>
+                <id>LIPPC12</id>
+            </referenceLocation-ReferenceLocationAirspace>
+            <toConfirm>false</toConfirm>
+        </regulationLocations>
+        <regulationLocations>
+            <regulationId>LIP1205M</regulationId>
+            <referenceLocation-ReferenceLocationAirspace>
+                <type>AIRSPACE</type>
+                <id>LIPPN12</id>
+            </referenceLocation-ReferenceLocationAirspace>
+            <toConfirm>false</toConfirm>
+        </regulationLocations>
+        <icaoRoute>N0378F280 LUMAV1K LUMAV L12 KOPER DCT VIC DCT ALESE DCT NAXAV DCT UNIMI DCT KPT
+            L856 NEGRA DCT LOKTA DCT PICWI DCT EDISA</icaoRoute>
+        <routeLength>379</routeLength>
+        <departureTolerance>
+            <toleranceWindow>
+                <wef>08:17</wef>
+                <unt>08:32</unt>
+            </toleranceWindow>
+            <extended>false</extended>
+        </departureTolerance>
+        <mostPenalisingRegulationCause>
+            <reason>WEATHER</reason>
+            <locationCategory>ENROUTE</locationCategory>
+            <iataDelayCode>81</iataDelayCode>
+        </mostPenalisingRegulationCause>
+        <cfmuFlightType>ACT</cfmuFlightType>
+        <filedRegistrationMark>MM62287</filedRegistrationMark>
+        <ctotLimitReason>SLOT_TIME_NOT_LIMITED</ctotLimitReason>
+        <targetTimeOverFix>
+            <regulationId>LIPS1205</regulationId>
+            <targetTime>2024-09-05 08:22:51</targetTime>
+            <targetLevel>
+                <unit>F</unit>
+                <level>1</level>
+                <ground>false</ground>
+                <ceiling>false</ceiling>
+            </targetLevel>
+            <aerodromeICAOId>LIPE</aerodromeICAOId>
+            <coveredDistance>0</coveredDistance>
+            <actualTimeAtTarget>
+                <estimatedActualTimeAtTarget>2024-09-05 08:22</estimatedActualTimeAtTarget>
+                <targetTimeCompliance>INSIDE</targetTimeCompliance>
+            </actualTimeAtTarget>
+        </targetTimeOverFix>
+        <flightState>ATC_ACTIVATED</flightState>
+        <slotSwapCounter>
+            <currentCounter>0</currentCounter>
+            <maxLimit>3</maxLimit>
+        </slotSwapCounter>
+        <aircraftAddress>33FE39</aircraftAddress>
+        <arrivalInformation>
+            <apiArrivalProcedure>
+                <DCT />
+            </apiArrivalProcedure>
+            <nmArrivalProcedure>
+                <DCT />
+            </nmArrivalProcedure>
+        </arrivalInformation>
+        <slotZone>
+            <beforeCTO>4</beforeCTO>
+            <afterCTO>10</afterCTO>
+        </slotZone>
+        <apiSubmissionRules>
+            <earliestSubmissionTargetTimeOverAPI>2024-09-05 07:27</earliestSubmissionTargetTimeOverAPI>
+        </apiSubmissionRules>
+        <wakeTurbulenceCategory>LIGHT</wakeTurbulenceCategory>
+    </flightData>
+    <eventType>IDE</eventType>
+    <concernedUnits>
+        <item>ACCLSAST</item>
+        <item>ACCLIPP</item>
+        <item>ACCSEDGG</item>
+        <item>ACCLIIIT</item>
+        <item>FDPLIPP</item>
+        <item>ACC1LOVV</item>
+        <item>ACCEDDZ</item>
+        <item>FFLAOCC</item>
+        <item>APPLIPE</item>
+        <item>ACCEDMM</item>
+        <item>ACCEDDD</item>
+        <item>UACEDUU</item>
+        <item>ACCLSAZ</item>
+    </concernedUnits>
+</fl:FlightDataMessage>
+ActiveMQTextMessage {commandId = 252613, responseRequired = false, messageId =
+ID:esbdmz1a-45053-1723624335499-8:2932:1:1:252609, originalDestination = null, originalTransactionId
+= null, producerId = ID:esbdmz1a-45053-1723624335499-8:2932:1:1, destination =
+topic://nm.flightdata.records, transactionId = null, expiration = 1725524656579, timestamp =
+1725524596579, arrival = 0, brokerInTime = 1725524596579, brokerOutTime = 1725524596580,
+correlationId = null, replyTo = null, persistent = false, type = null, priority = 4, groupID = null,
+groupSequence = 0, targetConsumerId = null, compressed = false, userID = null, content =
+org.apache.activemq.util.ByteSequence@25ded7d6, marshalledProperties = null, dataStructure = null,
+redeliveryCounter = 0, size = 0, properties = null, readOnlyProperties = true, readOnlyBody = true,
+droppable = false, jmsXGroupFirstForConsumer = false, text =
+<fl:FlightDataMessage xmlns:fw="eurocontrol/c...DataMessage>}
