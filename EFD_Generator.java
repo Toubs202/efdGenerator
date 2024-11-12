@@ -227,6 +227,7 @@ public class EFD_Generator {
         public void run() {
             try (ServerSocket serverSocket = new ServerSocket(TCP_PORT)) {
                 System.out.println("TCP-Server gestartet, wartet auf Verbindungen...");
+                sendToActiveMQ("Hello All");
 
                 while (true) {
                     // Warten auf eine eingehende Verbindung
