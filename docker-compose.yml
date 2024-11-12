@@ -16,6 +16,11 @@ services:
       ACTIVEMQ_ADMIN_PASSWORD: admin
     networks:
       - efd-generator_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8161"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   redis:
     image: redis:alpine
@@ -24,6 +29,11 @@ services:
       - "6379:6379"     # Standard-Port für Redis
     networks:
       - efd-generator_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
   efd_generator:
     build:
@@ -54,6 +64,13 @@ services:
       - efd-generator_network
     depends_on:
       - efd_generator
+      - activemq
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:80"]
+        interval: 30s
+        timeout: 10s
+        retries: 3
+
 
 volumes:
   efd_data:
