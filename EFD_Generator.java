@@ -29,7 +29,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class EFD_Generator {
     private static Jedis redisClient;
-    private static final int TCP_PORT = 12345;
+    private static final int TCP_PORT = 9091;
 
     static {
         redisClient = new Jedis("redis", 6379); // Verbindung zu Redis

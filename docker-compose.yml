@@ -14,14 +14,14 @@ services:
       ACTIVEMQ_ADMIN_LOGIN: admin
       ACTIVEMQ_ADMIN_PASSWORD: admin
     networks:
-      - project-root_network
+      - efd-generator_network
 
   redis:
     image: redis:alpine
     ports:
       - "6379:6379"     # Standard-Port für Redis
     networks:
-      - project-root_network
+      - efd-generator_network
 
   efd_generator:
     build:
@@ -35,7 +35,7 @@ services:
     volumes:
       - efd_data:/app/data  # Volumen zur Speicherung der EFD-Meldungen
     networks:
-      - project-root_network
+      - efd-generator_network
     deploy:
       replicas: 3  # 3 Container für den EFD-Generator
 
@@ -47,7 +47,7 @@ services:
     volumes:
       - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg  # Konfigurationsdatei für HAProxy
     networks:
-      - project-root_network
+      - efd-generator_network
     depends_on:
       - efd_generator
 
@@ -55,5 +55,5 @@ volumes:
   efd_data:
 
 networks:
-  project-root_network:
+  efd-generator_network:
     driver: bridge
