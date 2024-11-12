@@ -153,6 +153,7 @@ public class EFD_Generator {
      static void processFlightPlan(String flightID, String flightPlanMessage) {
         try {
         	ArrayList<String[]> flightPlan = new ArrayList<>();
+        	//TODO add conversion from flightPlanMessage to ArrayList
             // Speichern des flightPlans in Redis
             storeFlightPlan(flightID, flightPlan);
 
@@ -186,7 +187,8 @@ public class EFD_Generator {
     
      static void processFlightData(String flightID, String flightDataMessage) {
         try {
-            // Umwandeln der JSON-Nachricht in flightData (ArrayList<String[]>)
+            // Umwandeln der XML-Nachricht in flightData (ArrayList<String[]>)
+        	//TODO umwandeln von flightDataString in ArrayList und dann EFD erstellen
             Gson gson = new Gson();
             File_Reader flightDataReader = new File_Reader(flightDataMessage);
             ArrayList<String[]> flightData = flightDataReader.mapFile();
@@ -252,7 +254,7 @@ public class EFD_Generator {
         public void run() {
             try (BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                  PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
-
+            	//TODO korrekte verarbeitung der Inputs
                 // Nachrichtentyp (flightPlan oder flightData)
                 String messageType = in.readLine();
                 String flightID = in.readLine();
