@@ -17,7 +17,7 @@ services:
     networks:
       - efd-generator_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8161"]
+      test: ["CMD-SHELL", "curl -f http://localhost:8161 || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -52,11 +52,11 @@ services:
     deploy:
       replicas: 3  # 3 Container für den EFD-Generator
 
-  # Load Balancer (HAProxy)
   load_balancer:
     image: haproxy:lts
     ports:
       - "9091:9091"  # Port für den Load Balancer
+      - "1936:1936"  # Port für das HAProxy-Webinterface
     volumes:
       - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg  # Konfigurationsdatei für HAProxy
     restart: unless-stopped
@@ -66,11 +66,10 @@ services:
       - efd_generator
       - activemq
     healthcheck:
-        test: ["CMD", "curl", "-f", "http://localhost:80"]
-        interval: 30s
-        timeout: 10s
-        retries: 3
-
+      test: ["CMD-SHELL", "curl -f http://localhost:9091 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 volumes:
   efd_data:

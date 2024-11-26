@@ -252,6 +252,7 @@ public class EFD_Generator {
 
         @Override
         public void run() {
+        	System.out.println("New Connection");
             try (BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                  PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
             	//TODO korrekte verarbeitung der Inputs
@@ -259,6 +260,8 @@ public class EFD_Generator {
                 String messageType = in.readLine();
                 String flightID = in.readLine();
                 String message = in.readLine();
+                
+                System.out.println("Message: "+in.readLine());
 
                 if ("flightPlan".equals(messageType)) {
                     // Verarbeite das flightPlan
@@ -268,7 +271,7 @@ public class EFD_Generator {
                     // Verarbeite die flightData
                     processFlightData(flightID, message);
                     out.println("FlightData verarbeitet.");
-                } else {
+                } else {	
                     out.println("Unbekannter Nachrichtentyp.");
                 }
             } catch (IOException e) {
