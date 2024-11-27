@@ -198,18 +198,18 @@ public class EFD_Generator {
             ArrayList<String[]> flightPlan = retrieveFlightPlan(flightID);
             if (flightPlan == null) {
                 System.out.println("Kein FlightPlan für " + flightID + " gefunden.");
-                return;
+            }	
+            else {
+                // EFD-Objekt erstellen
+                EFD efd = new EFD.Builder(flightPlan, flightData).build();
+
+                // EFD in einen String umwandeln
+                String efdString = convertEFDToString(efd);
+
+                // EFD-String an ActiveMQ senden
+                sendToActiveMQ(efdString);
+                System.out.println("EFD für " + flightID + " an ActiveMQ gesendet.");
             }
-
-            // EFD-Objekt erstellen
-            EFD efd = new EFD.Builder(flightPlan, flightData).build();
-
-            // EFD in einen String umwandeln
-            String efdString = convertEFDToString(efd);
-
-            // EFD-String an ActiveMQ senden
-            sendToActiveMQ(efdString);
-            System.out.println("EFD für " + flightID + " an ActiveMQ gesendet.");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -258,22 +258,38 @@ public class EFD_Generator {
                  PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
             	//TODO korrekte verarbeitung der Inputs
                 // Nachrichtentyp (flightPlan oder flightData)
-                String messageType = in.readLine();
-                String flightID = in.readLine();
-                String message = in.readLine();
-                
-                System.out.println("Message: "+messageType+flightID+message);
-
-                if ("flightPlan".equals(messageType)) {
-                    // Verarbeite das flightPlan
-                    processFlightPlan(flightID, message);
-                    out.println("FlightPlan verarbeitet und gespeichert.");
-                } else if ("flightData".equals(messageType)) {
-                    // Verarbeite die flightData
-                    processFlightData(flightID, message);
-                    out.println("FlightData verarbeitet.");
-                } else {	
-                    out.println("Unbekannter Nachrichtentyp.");
+            	StringBuilder messageBuilder = new StringBuilder();
+            	String line;
+            	while ((line = in.readLine()) != null) {
+            		if(line.equals("")) {
+            			break;
+            		}
+            	    messageBuilder.append(line).append("\n");  // Alle eingehenden Zeilen sammeln
+            	}
+            	
+            	String message = messageBuilder.toString();
+            	
+            	String[] lines = message.split("\n");
+                if (lines.length >= 2) {
+                    // Zugriff auf die zweite Zeile (Index 1, da Arrays nullbasiert sind)
+                    String flightID = lines[1];
+                    String messageType = lines[0];
+	                
+	                System.out.println("Msg: "+message);
+	
+	                if ("flightPlan".equals(messageType)) {
+	                    // Verarbeite das flightPlan
+	                    processFlightPlan(flightID, message);
+	                    out.println("FlightPlan verarbeitet und gespeichert.");
+	                } else if ("flightData".equals(messageType)) {
+	                    // Verarbeite die flightData
+	                    processFlightData(flightID, message);
+	                    out.println("FlightData verarbeitet.");
+	                } else {	
+	                    out.println("Unbekannter Nachrichtentyp.");
+	                }
+                } else {
+                    System.out.println("Der String enthält weniger als zwei Zeilen.");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
