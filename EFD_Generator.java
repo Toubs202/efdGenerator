@@ -46,6 +46,7 @@ public class EFD_Generator {
 
     // Flugplan aus Redis abrufen
     public static ArrayList<String[]> retrieveFlightPlan(String flightId) throws Exception {
+    	System.out.println("Retrieving FlightPlan");
         String jsonFlightPlan = redisClient.get(flightId);
         if (jsonFlightPlan == null) return null;
         return new Gson().fromJson(jsonFlightPlan, new TypeToken<ArrayList<String[]>>() {}.getType());
@@ -261,7 +262,7 @@ public class EFD_Generator {
                 String flightID = in.readLine();
                 String message = in.readLine();
                 
-                System.out.println("Message: "+in.readLine());
+                System.out.println("Message: "+messageType+flightID+message);
 
                 if ("flightPlan".equals(messageType)) {
                     // Verarbeite das flightPlan
