@@ -188,8 +188,9 @@ public class EFD_Generator {
     
      static void processFlightData(String flightID, String flightDataMessage) {
         try {
+        	System.out.println("Processing Flight Data: "+flightDataMessage);
             // Umwandeln der XML-Nachricht in flightData (ArrayList<String[]>)
-        	//TODO umwandeln von flightDataString in ArrayList und dann EFD erstellen
+        	// TODO umwandeln von flightDataString in ArrayList und dann EFD erstellen;
             Gson gson = new Gson();
             File_Reader flightDataReader = new File_Reader(flightDataMessage);
             ArrayList<String[]> flightData = flightDataReader.mapFile();
@@ -256,8 +257,6 @@ public class EFD_Generator {
         	System.out.println("New Connection");
             try (BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                  PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
-            	//TODO korrekte verarbeitung der Inputs
-                // Nachrichtentyp (flightPlan oder flightData)
             	StringBuilder messageBuilder = new StringBuilder();
             	String line;
             	while ((line = in.readLine()) != null) {
@@ -274,6 +273,7 @@ public class EFD_Generator {
                     // Zugriff auf die zweite Zeile (Index 1, da Arrays nullbasiert sind)
                     String flightID = lines[1];
                     String messageType = lines[0];
+                    //TODO umwandlung zu ArrayList<String>
 	                
 	                System.out.println("Msg: "+message);
 	
