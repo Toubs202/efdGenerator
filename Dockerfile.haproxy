@@ -1,0 +1,15 @@
+FROM haproxy:lts
+
+# Benutzer auf root setzen
+USER root
+
+# Update und Installation von curl und netcat
+RUN apt-get update && \
+    apt-get install -y curl netcat-traditional && \
+    rm -rf /var/lib/apt/lists/*
+
+# Zurück zum Standardbenutzer wechseln
+USER haproxy
+
+# HAProxy-Konfiguration kopieren
+COPY haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg

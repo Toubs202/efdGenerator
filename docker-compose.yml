@@ -53,7 +53,9 @@ services:
       replicas: 3  # 3 Container für den EFD-Generator
 
   load_balancer:
-    image: haproxy:lts
+    build:
+      context: .
+      dockerfile: Dockerfile.haproxy
     ports:
       - "9091:9091"  # Port für den Load Balancer
       - "1936:1936"  # Port für das HAProxy-Webinterface
@@ -66,7 +68,7 @@ services:
       - efd_generator
       - activemq
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:9091 || exit 1"]
+      test: ["CMD-SHELL", "echo 'flightPlan\n' | nc localhost 9090 || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
