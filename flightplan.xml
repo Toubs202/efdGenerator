@@ -13,7 +13,7 @@ Content:
     <parentMessageId>20240905082532IAA62963092</parentMessageId>
     <flightPlan>
         <flightPlan>
-            <ifplId>AA62963092</ifplId>
+            <ifplId>AA62935038</ifplId>
             <aerodromeOfDeparture>
                 <icaoId>LIPZ</icaoId>
             </aerodromeOfDeparture>
@@ -157,3 +157,4 @@ Content:
         <item>LOXBCFPU1</item>
     </concernedUnits>
 </fl:FlightPlanMessage>
+<fl:FlightDataMessage xmlns:fw="eurocontrol/c...DataMessage>}

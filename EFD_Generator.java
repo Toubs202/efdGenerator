@@ -150,11 +150,13 @@ public class EFD_Generator {
         }
     }
     
-    // Verarbeitet das flightPlan und speichert es in Redis
+    // Verarbeitet den flightPlan und speichert ihn in Redis
      static void processFlightPlan(String flightID, String flightPlanMessage) {
         try {
-        	ArrayList<String[]> flightPlan = new ArrayList<>();
-        	//TODO add conversion from flightPlanMessage to ArrayList
+            Gson gson = new Gson();
+            File_Reader flightPlanReader = new File_Reader(flightPlanMessage);
+            ArrayList<String[]> flightPlan = flightPlanReader.mapXML(flightPlanMessage);
+            System.out.println(flightPlan);
             // Speichern des flightPlans in Redis
             storeFlightPlan(flightID, flightPlan);
 
@@ -193,8 +195,7 @@ public class EFD_Generator {
         	// TODO umwandeln von flightDataString in ArrayList und dann EFD erstellen;
             Gson gson = new Gson();
             File_Reader flightDataReader = new File_Reader(flightDataMessage);
-            ArrayList<String[]> flightData = flightDataReader.mapFile();
-
+            ArrayList<String[]> flightData = flightDataReader.mapXML(flightDataMessage);
             // FlightPlan aus Redis holen
             ArrayList<String[]> flightPlan = retrieveFlightPlan(flightID);
             if (flightPlan == null) {
@@ -221,87 +222,5 @@ public class EFD_Generator {
         System.out.println("Starte den TCP-Server...");
         new Thread(new TCPServer()).start();
     }
-
-
-
-
-
-     static class TCPServer implements Runnable {
-        @Override
-        public void run() {
-            try (ServerSocket serverSocket = new ServerSocket(TCP_PORT)) {
-                System.out.println("TCP-Server gestartet, wartet auf Verbindungen...");
-                sendToActiveMQ("Hello All");
-
-                while (true) {
-                    // Warten auf eine eingehende Verbindung
-                    Socket clientSocket = serverSocket.accept();
-                    // Für jede Verbindung einen neuen Thread erstellen
-                    new Thread(new ClientHandler(clientSocket)).start();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-     static class ClientHandler implements Runnable {
-        private final Socket clientSocket;
-
-        public ClientHandler(Socket clientSocket) {
-            this.clientSocket = clientSocket;
-        }
-
-        @Override
-        public void run() {
-        	System.out.println("New Connection");
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                 PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
-            	StringBuilder messageBuilder = new StringBuilder();
-            	String line;
-            	while ((line = in.readLine()) != null) {
-            		if(line.equals("")) {
-            			break;
-            		}
-            	    messageBuilder.append(line).append("\n");  // Alle eingehenden Zeilen sammeln
-            	}
-            	
-            	String message = messageBuilder.toString();
-            	
-            	String[] lines = message.split("\n");
-                if (lines.length >= 2) {
-                    // Zugriff auf die zweite Zeile (Index 1, da Arrays nullbasiert sind)
-                    String flightID = lines[1];
-                    String messageType = lines[0];
-                    //TODO umwandlung zu ArrayList<String>
-	                
-	                System.out.println("Msg: "+message);
-	
-	                if ("flightPlan".equals(messageType)) {
-	                    // Verarbeite das flightPlan
-	                    processFlightPlan(flightID, message);
-	                    out.println("FlightPlan verarbeitet und gespeichert.");
-	                } else if ("flightData".equals(messageType)) {
-	                    // Verarbeite die flightData
-	                    processFlightData(flightID, message);
-	                    out.println("FlightData verarbeitet.");
-	                } else {	
-	                    out.println("Unbekannter Nachrichtentyp.");
-	                }
-                } else {
-                    System.out.println("Der String enthält weniger als zwei Zeilen.");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    clientSocket.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-     }
-
 }
 
