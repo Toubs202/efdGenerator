@@ -17,6 +17,7 @@ COPY apache-activemq-5.18.6-bin/apache-activemq-5.18.6/lib/activemq-client-5.18.
 
 # Kopiere die Gson JAR-Datei in das Arbeitsverzeichnis
 COPY gson-2.11.0.jar /app/
+COPY kieker-2.0.2-aspectj.jar /app/
 
 # Kompiliere die Java-Dateien und setze den Klassenpfad für die JAR-Abhängigkeiten
 RUN javac -cp ".:/app/*" EFD_Generator.java File_Reader.java Date.java EFD.java EventList.java ClientHandler.java TCPServer.java
